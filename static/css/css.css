@@ -1,0 +1,47 @@
+body{
+
+    background-color: rgb(238, 243, 237);
+}
+
+h1 {
+    font-size: 60px;
+    color: #333; 
+    text-align: center;
+}
+
+ul {
+    list-style-type: none;
+}
+
+ul li a {
+    text-decoration: none; 
+    display: block; 
+    padding: 10px;
+    background-color: #0074b8; 
+    color: #fff; 
+    border-radius: 5px; 
+    margin: 5px 0; 
+    text-align: center;
+}
+
+
+ul li a:hover {
+    background-color: #004e85;
+}
+
+
+
+form {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #5f0a0a;
+    border-radius: 7px;
+    box-sizing: border-box;
+    font-size: 20px;
+}
+
+p{
+    font-size: 30px;
+}
+

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de Mostradores{% endblock %}
+
+{% block heading %}Lista de mostradores{% endblock %}
+
+{% block content %}
+  <h2>Agregar Mostrador</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Guardar</button>
+  </form>
+
+  <h2>Mostradores Actuales</h2>
+  <ul>
+    {% for mostrador in mostradores %}
+      <li>{{ mostrador.Nombre }} {{ mostrador.Apellido }}</li>
+      
+    {% endfor %}
+  </ul>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de Encargados{% endblock %}
+
+{% block heading %}Lista de encargados{% endblock %}
+
+{% block content %}
+  <h2>Agregar Encargado</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Guardar</button>
+  </form>
+
+  <h2>Encargados Actuales</h2>
+  <ul>
+    {% for encargado in encargados %}
+      <li>{{ encargado.Nombre }} {{ encargado.Apellido }}</li>
+     
+    {% endfor %}
+  </ul>
+{% endblock %}

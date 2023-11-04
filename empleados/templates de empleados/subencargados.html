@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de Subencargados{% endblock %}
+
+{% block heading %}Lista de subencargados{% endblock %}
+
+{% block content %}
+  <h2>Agregar Subencargado</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Guardar</button>
+  </form>
+
+  <h2>Subencargados Actuales</h2>
+  <ul>
+    {% for subencargado in subencargados %}
+      <li>{{ subencargado.Nombre }} {{ subencargado.Apellido }}</li>
+      
+    {% endfor %}
+  </ul>
+
+  
+{% endblock %}
+
+

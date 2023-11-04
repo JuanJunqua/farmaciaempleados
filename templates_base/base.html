@@ -1,0 +1,26 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{% block title %}Lista de Empleados{% endblock %}</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/css.css' %}">
+</head>
+<body>
+  <h1>{% block heading %}Empleados{% endblock %}</h1>
+  <p>Selecciona una categoría de empleados:</p>
+
+  <ul>
+    <li><a href="{% url 'encargados' %}">Encargados</a></li>
+    <li><a href="{% url 'subencargados' %}">Subencargados</a></li>
+    <li><a href="{% url 'mostradores' %}">Mostradores</a></li>
+  </ul>
+
+  <form method="get" action="{% url 'busqueda' %}">
+    <input type="text" name="q" placeholder="Buscar empleados">
+    <button type="submit">Buscar</button>
+  </form>
+
+  {% block content %}{% endblock %}
+</body>
+</html>

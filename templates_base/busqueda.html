@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Resultados de búsqueda{% endblock %}
+
+{% block heading %}Resultados de búsqueda{% endblock %}
+
+{% block content %}
+  <h2>Resultados de búsqueda</h2>
+  <ul>
+    {% for empleado in empleados %}
+      <li>{{ empleado.Nombre }} {{ empleado.Apellido }} - {{ empleado.empleo }}</li>
+    
+    {% empty %}
+      <p>No se encontraron empleados.</p>
+    {% endfor %}
+  </ul>
+{% endblock %}
