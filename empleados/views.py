@@ -50,9 +50,9 @@ def mostradores(request):
 def empleados(request):
     query = request.POST.get("busqueda") or request.GET.get("q")
     
-    encargados_result = encargado.objects.filter(Q(Nombre__icontains=query) | Q(Apellido__icontains=query) | Q(descripcion__icontains=query))
-    subencargados_result = subencargado.objects.filter(Q(Nombre__icontains=query) | Q(Apellido__icontains=query) | Q(descripcion__icontains=query))
-    mostradores_result = mostrador.objects.filter(Q(Nombre__icontains=query) | Q(Apellido__icontains=query) | Q(descripcion__icontains=query))
+    encargados_result = encargado.objects.filter(Q(Nombre__icontains=query) | Q(Apellido__icontains=query) | Q(empleo__icontains=query))
+    subencargados_result = subencargado.objects.filter(Q(Nombre__icontains=query) | Q(Apellido__icontains=query) | Q(empleo__icontains=query))
+    mostradores_result = mostrador.objects.filter(Q(Nombre__icontains=query) | Q(Apellido__icontains=query) | Q(empleo__icontains=query))
 
     empleados = list(encargados_result) + list(subencargados_result) + list(mostradores_result) if query else []
 
