@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Empleados{% endblock %}
+
+{% block content %}
+  <h2>Lista de Empleados</h2>
+  
+  <p>Encargados:</p>
+  {% for encargado in encargados %}
+    <p>{{ encargado.Nombre }} - {{ encargado.empleo }}</p>
+  {% endfor %}
+
+  <p>Subencargados:</p>
+  {% for subencargado in subencargados %}
+    <p>{{ subencargado.Nombre }} - {{ subencargado.empleo }}</p>
+  {% endfor %}
+
+  <p>Mostradores:</p>
+  {% for mostrador in mostradores %}
+    <p>{{ mostrador.Nombre }} - {{ mostrador.empleo }}</p>
+  {% endfor %}
+{% endblock %}

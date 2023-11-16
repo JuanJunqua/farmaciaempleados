@@ -74,3 +74,17 @@ def empleados(request):
         empleados = []
 
     return render(request, 'busqueda.html', {'empleados': empleados, 'query': query})
+
+
+def mostrarempleados(request):
+    encargados = encargado.objects.all()
+    subencargados = subencargado.objects.all()
+    mostradores = mostrador.objects.all()
+
+    context = {
+        'encargados': encargados,
+        'subencargados': subencargados,
+        'mostradores': mostradores,
+    }
+
+    return render(request, 'mostrarempleados.html', context)
