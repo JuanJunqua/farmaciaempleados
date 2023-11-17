@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de Mostradores{% endblock %}
+
+{% block heading %}Lista de mostradores{% endblock %}
+
+{% block content %}
+  <h2>Editar empleado</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Guardar</button>
+  </form>
+
+  
+{% endblock %}
+

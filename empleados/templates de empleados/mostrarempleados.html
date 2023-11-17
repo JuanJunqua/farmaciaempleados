@@ -1,22 +1,32 @@
 {% extends 'base.html' %}
 
-{% block title %}Empleados{% endblock %}
-
 {% block content %}
   <h2>Lista de Empleados</h2>
   
   <p>Encargados:</p>
   {% for encargado in encargados %}
-    <p>{{ encargado.Nombre }} - {{ encargado.empleo }}</p>
+    <p>
+      {{ encargado.Nombre }} - {{ encargado.empleo }} - 
+      <a href="{% url 'eliminar_empleado' encargado.id %}" >Eliminar</a>
+      <a href="{% url 'editar_empleado' encargado.id %}" >Editar</a>
+    </p>
   {% endfor %}
 
   <p>Subencargados:</p>
   {% for subencargado in subencargados %}
-    <p>{{ subencargado.Nombre }} - {{ subencargado.empleo }}</p>
+    <p>
+      {{ subencargado.Nombre }} - {{ subencargado.empleo }} - 
+      <a href="{% url 'eliminar_empleado' subencargado.id %}" >Eliminar</a>
+      <a href="{% url 'editar_empleado' subencargado.id %}" >Editar</a>
+    </p>
   {% endfor %}
 
   <p>Mostradores:</p>
   {% for mostrador in mostradores %}
-    <p>{{ mostrador.Nombre }} - {{ mostrador.empleo }}</p>
+    <p>
+      {{ mostrador.Nombre }} - {{ mostrador.empleo }} - 
+      <a href="{% url 'eliminar_empleado' mostrador.id %}">Eliminar</a>
+      <a href="{% url 'editar_empleado' mostrador.id %}" >Editar</a>
+    </p>
   {% endfor %}
 {% endblock %}

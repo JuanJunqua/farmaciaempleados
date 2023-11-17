@@ -8,7 +8,8 @@
 </head>
 <body>
   <h1>{% block heading %}Empleados{% endblock %}</h1>
-  <p>Selecciona una categoría de empleados:</p>
+  
+  <p>Selecciona una categoría de empleados que quiera agregar:</p>
 
   <ul>
     <li><a href="{% url 'encargados' %}">Encargados</a></li>
@@ -19,6 +20,10 @@
   <form method="get" action="{% url 'busqueda' %}">
     <input type="text" name="q" placeholder="Buscar empleados">
     <button type="submit">Buscar</button>
+  </form>
+
+  <form method="get" action="{% url 'mostrarempleados' %}">
+    <button type="submit">Mostrar Todos </button>
   </form>
 
   {% block content %}{% endblock %}
