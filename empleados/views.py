@@ -4,6 +4,7 @@ from .forms import EncargadoForm,SubencargadoForm,MostradorForm
 from django.db.models import Q
 from functools import reduce
 from operator import or_
+from django.contrib.auth.decorators import login_required
 
 from django.http import Http404
 
@@ -108,31 +109,30 @@ def eliminar_empleado(request, id):
     return render(request, 'eliminar_empleado.html', {'empleado': empleado_eliminar})
 
 def editar_empleado(request, id):
-    empleado = (
+   
+    empleadoeditar = (
         encargado.objects.filter(id=id).first() or
         subencargado.objects.filter(id=id).first() or
         mostrador.objects.filter(id=id).first()
     )
 
-  
+    
+    formularioseditar = {
+        encargado: EncargadoForm,
+        subencargado: SubencargadoForm,
+        mostrador: MostradorForm,
+    }
 
     if request.method == "POST":
-        if isinstance(empleado, encargado):
-            form = EncargadoForm(request.POST, instance=empleado)
-        elif isinstance(empleado, subencargado):
-            form = SubencargadoForm(request.POST, instance=empleado)
-        elif isinstance(empleado, mostrador):
-            form = MostradorForm(request.POST, instance=empleado)
+        formulario = formularioseditar[type(empleadoeditar)](request.POST, instance=empleadoeditar)
 
-        if form.is_valid():
-            form.save()
+        if formulario.is_valid():
+            formulario.save()
             return redirect('mostrarempleados')
     else:
-        if isinstance(empleado, encargado):
-            form = EncargadoForm(instance=empleado)
-        elif isinstance(empleado, subencargado):
-            form = SubencargadoForm(instance=empleado)
-        elif isinstance(empleado, mostrador):
-            form = MostradorForm(instance=empleado)
+        formulario = formularioseditar[type(empleadoeditar)](instance=empleadoeditar)
 
-    return render(request, 'editar_empleado.html', {'form': form, 'empleado': empleado})
+    return render(request, 'editar_empleado.html', {'form': formulario, 'empleado': empleadoeditar})
+
+
+

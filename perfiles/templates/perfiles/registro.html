@@ -1,5 +1,7 @@
 {% load static %}
 
+{% load static %}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,18 +11,6 @@
 <body>
   <h1>{% block heading %}Empleados{% endblock %}</h1>
   
-  {% if user.is_authenticated %}
-    <p>Bienvenido, {{ user.username }}. <a href="{% url 'logout' %}">Cerrar Sesión</a></p>
-  {% else %}
-    <form method="get" action="{% url 'login' %}">
-      <button type="submit">Login</button>
-    </form>
-    
-    <form method="get" action="{% url 'registro' %}">
-      <button type="submit">Registrar</button>
-    </form>
-  {% endif %}
-
   <p>Selecciona una categoría de empleados que quiera agregar:</p>
 
   <ul>
@@ -39,5 +29,14 @@
   </form>
 
   {% block content %}{% endblock %}
+
+  <!-- Formulario de Registro -->
+  <h2>Registro de Usuario</h2>
+  <form method="post" action="{% url 'registro' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Registrar</button>
+  </form>
+
 </body>
 </html>
