@@ -6,52 +6,62 @@ from functools import reduce
 from operator import or_
 from django.contrib.auth.decorators import login_required
 
-from django.http import Http404
+
+
 
 
 def index(request):
     return render(request, 'base.html')
 
+
+@login_required
 def encargados(request):
     if request.method == 'POST':
         form = EncargadoForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('encargados') 
+            nuevo_encargado = form.save(commit=False)
+            nuevo_encargado.creador = request.user
+            nuevo_encargado.save()
+            return redirect('base') 
     else:
-        form = EncargadoForm()
+        form = EncargadoForm(initial={'creador': request.user})
     
-    encargados = encargado.objects.all()
-    
-    return render(request, 'encargados.html', {'encargados': encargados, 'form': form})
+    return render(request, 'encargados.html', {'form': form})
 
+
+@login_required
 def subencargados(request):
     if request.method == 'POST':
         form = SubencargadoForm(request.POST)
         if form.is_valid():
-            form.save()
+            nuevo_subencargado = form.save(commit=False)
+            nuevo_subencargado.creador = request.user
+            nuevo_subencargado.save()
             return redirect('subencargados')  
     else:
-        form = SubencargadoForm()
+        form = SubencargadoForm(initial={'creador': request.user})
 
     subencargados = subencargado.objects.all()
 
     return render(request, 'subencargados.html', {'subencargados': subencargados, 'form': form})
 
+@login_required
 def mostradores(request):
     if request.method == 'POST':
         form = MostradorForm(request.POST)
         if form.is_valid():
-            form.save()
+            nuevo_mostrador = form.save(commit=False)
+            nuevo_mostrador.creador = request.user
+            nuevo_mostrador.save()
             return redirect('mostradores')
     else:
-        form = MostradorForm()
+        form = MostradorForm(initial={'creador': request.user})
 
     mostradores = mostrador.objects.all()
 
     return render(request, 'mostradores.html', {'mostradores': mostradores, 'form': form})
 
-
+#buscar
 def empleados(request):
     query = request.POST.get("busqueda") or request.GET.get("q")
     
@@ -78,7 +88,7 @@ def empleados(request):
 
     return render(request, 'busqueda.html', {'empleados': empleados, 'query': query})
 
-
+#ver todos los empleados
 def mostrarempleados(request):
     encargados = encargado.objects.all()
     subencargados = subencargado.objects.all()
@@ -92,8 +102,8 @@ def mostrarempleados(request):
 
     return render(request, 'mostrarempleados.html', context)
 
-
-
+#eliminar
+@login_required
 def eliminar_empleado(request, id):
     empleado_eliminar = (
         encargado.objects.filter(id=id).first() or
@@ -108,6 +118,9 @@ def eliminar_empleado(request, id):
 
     return render(request, 'eliminar_empleado.html', {'empleado': empleado_eliminar})
 
+
+#editar
+@login_required
 def editar_empleado(request, id):
    
     empleadoeditar = (
