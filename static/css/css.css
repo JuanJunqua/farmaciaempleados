@@ -1,6 +1,6 @@
 body{
 
-    background-color: rgb(238, 243, 237);
+    background-color: rgb(238, 244, 238);
 }
 
 h1 {
@@ -35,7 +35,7 @@ form {
     width: 100%;
     padding: 10px;
     margin: 5px 0;
-    border: 1px solid #5f0a0a;
+    border: none;
     border-radius: 7px;
     box-sizing: border-box;
     font-size: 20px;
