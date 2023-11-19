@@ -11,6 +11,14 @@
   
   {% if user.is_authenticated %}
     <p>Bienvenido, {{ user.username }}. <a href="{% url 'logout' %}">Cerrar Sesión</a></p>
+    <p><a href="{% url 'editar_perfil' %}">Editar Perfil</a></p>
+    
+    {% if user.avatar %}
+      <img src="{{ user.avatar.imagen.url }}" alt="Avatar de {{ user.username }}">
+    {% else %}
+      <p><a href="{% url 'agregar_avatar' %}">Agregar Avatar</a></p>
+    {% endif %}
+    
   {% else %}
     <form method="get" action="{% url 'login' %}">
       <button type="submit">Login</button>
@@ -35,7 +43,7 @@
   </form>
 
   <form method="get" action="{% url 'mostrarempleados' %}">
-    <button type="submit">Mostrar Todos </button>
+    <button type="submit">Mostrar Todos</button>
   </form>
 
   {% block content %}{% endblock %}
