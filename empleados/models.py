@@ -35,3 +35,6 @@ class mostrador(models.Model):
     descripcion = models.CharField(max_length=10)
     empleo = models.CharField(max_length=64, default='mostrador')
     creador = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+
+
+    

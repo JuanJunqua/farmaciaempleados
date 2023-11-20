@@ -39,3 +39,6 @@ class MostradorForm(forms.ModelForm):
         except ValueError:
             raise forms.ValidationError('Telefono tiene que ser un numero')
         return telefono
+    
+
+    
