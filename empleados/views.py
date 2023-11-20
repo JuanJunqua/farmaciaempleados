@@ -149,3 +149,8 @@ def editar_empleado(request, id):
 
 
 
+
+def about_me(request):
+    return render(request, 'about.html')
+
+
