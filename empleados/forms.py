@@ -1,7 +1,14 @@
 from django import forms
 from .models import encargado, mostrador, subencargado
+from django.contrib.auth.models import User
 
-class EncargadoForm(forms.ModelForm):
+
+class BaseEmpleadoForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['empleo'].widget.attrs['readonly'] = True
+
+class EncargadoForm(BaseEmpleadoForm):
     class Meta:
         model = encargado
         fields = '__all__'
@@ -14,7 +21,7 @@ class EncargadoForm(forms.ModelForm):
             raise forms.ValidationError('Telefono tiene que ser un numero')
         return telefono
 
-class SubencargadoForm(forms.ModelForm):
+class SubencargadoForm(BaseEmpleadoForm):
     class Meta:
         model = subencargado
         fields = '__all__'
@@ -27,7 +34,7 @@ class SubencargadoForm(forms.ModelForm):
             raise forms.ValidationError('Telefono tiene que ser un numero')
         return telefono
 
-class MostradorForm(forms.ModelForm):
+class MostradorForm(BaseEmpleadoForm):
     class Meta:
         model = mostrador
         fields = '__all__'
@@ -40,5 +47,22 @@ class MostradorForm(forms.ModelForm):
             raise forms.ValidationError('Telefono tiene que ser un numero')
         return telefono
     
+from django import forms
+from .models import Message
 
-    
+
+
+class MessageForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        fields = ['content', 'receiver']
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super(MessageForm, self).__init__(*args, **kwargs)
+
+        if user:
+            
+            self.fields['receiver'].queryset = User.objects.exclude(username=user.username)
+            self.fields['receiver'].widget.attrs['class'] = 'form-control'  
+

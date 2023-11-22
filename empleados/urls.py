@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import about_me
+from .views import about_me, chat, lista_chats
 
 urlpatterns = [
     path('', views.index, name='base'),
@@ -12,4 +12,7 @@ urlpatterns = [
     path('empleados/eliminar_empleado/<int:id>/', views.eliminar_empleado, name='eliminar_empleado'),
     path('empleados/editar_empleado/<int:id>/', views.editar_empleado, name='editar_empleado'),
     path('empleados/about/', about_me, name='about'),
+    path('chat/<str:username>/', chat, name='chat'),
+    path('chats/', lista_chats, name='lista_chats'),
+
 ]

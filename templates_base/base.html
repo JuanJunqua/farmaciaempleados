@@ -30,6 +30,10 @@
               {% if not user.avatar %}
                 <li><a class="dropdown-item" href="{% url 'agregar_avatar' %}">Agregar Avatar</a></li>
               {% endif %}
+              <!-- Botón para ir a la lista de chats -->
+              <li><a class="dropdown-item" href="{% url 'lista_chats' %}">Lista de Chats</a></li>
+              <!-- Botón para ir a la página de iniciar chat -->
+              <li><a class="dropdown-item" href="{% url 'chat' username=user.username %}">Iniciar Chat</a></li>
             </ul>
           </div>
 

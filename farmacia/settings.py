@@ -57,7 +57,10 @@ ROOT_URLCONF = 'farmacia.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "templates_base/", BASE_DIR / "empleados" / "templates de empleados"],
+        'DIRS': [
+            BASE_DIR / "templates_base/",
+            BASE_DIR / "empleados" / "templates de empleados",
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -69,7 +72,6 @@ TEMPLATES = [
         },
     },
 ]
-
 WSGI_APPLICATION = 'farmacia.wsgi.application'
 
 

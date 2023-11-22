@@ -5,6 +5,16 @@ from django.db.models import Q
 from functools import reduce
 from operator import or_
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from .models import Message
+from .forms import MessageForm
+from django.db import models
+from django.http import HttpResponseNotFound
+
+
+
 
 
 
@@ -25,9 +35,10 @@ def encargados(request):
             return redirect('base') 
     else:
         form = EncargadoForm(initial={'creador': request.user})
-    
-    return render(request, 'encargados.html', {'form': form})
 
+    encargados_lista = encargado.objects.all() 
+    
+    return render(request, 'encargados.html', {'encargados': encargados_lista, 'form': form})
 
 @login_required
 def subencargados(request):
@@ -122,14 +133,12 @@ def eliminar_empleado(request, id):
 #editar
 @login_required
 def editar_empleado(request, id):
-   
     empleadoeditar = (
         encargado.objects.filter(id=id).first() or
         subencargado.objects.filter(id=id).first() or
         mostrador.objects.filter(id=id).first()
     )
 
-    
     formularioseditar = {
         encargado: EncargadoForm,
         subencargado: SubencargadoForm,
@@ -138,14 +147,16 @@ def editar_empleado(request, id):
 
     if request.method == "POST":
         formulario = formularioseditar[type(empleadoeditar)](request.POST, instance=empleadoeditar)
-
         if formulario.is_valid():
             formulario.save()
             return redirect('mostrarempleados')
     else:
+        
         formulario = formularioseditar[type(empleadoeditar)](instance=empleadoeditar)
+        formulario.fields['empleo'].widget.attrs['readonly'] = True
 
     return render(request, 'editar_empleado.html', {'form': formulario, 'empleado': empleadoeditar})
+
 
 
 
@@ -156,6 +167,68 @@ def about_me(request):
 
 
 
+
+
+
+
 #chat
 
 
+
+
+@login_required
+def chat(request, username):
+    print(f"Usuario actual logeado: {request.user.username}")
+    
+    try:
+        other_user = User.objects.get(username=username)
+        print(f"Usuario obtenido de la base de datos: {other_user.username}")
+    except User.DoesNotExist:
+        print(f"El usuario {username} no existe.")
+        return HttpResponseNotFound("El usuario no existe.")
+
+    
+    messages = Message.objects.filter(
+        (models.Q(sender=request.user, receiver=other_user) |
+         models.Q(sender=other_user, receiver=request.user))
+    ).order_by('timestamp')
+
+    if request.method == 'POST':
+        form = MessageForm(request.POST, user=request.user, initial={'receiver': other_user})
+        if form.is_valid():
+            
+            message = form.save(commit=False)
+            message.sender = request.user
+            message.receiver = form.cleaned_data['receiver']
+            message.save()
+            return redirect('chat', username=username)
+    else:
+        form = MessageForm(user=request.user, initial={'receiver': other_user})
+
+    return render(request, 'chat/chat.html', {
+        'other_user': other_user,
+        'messages': messages,
+        'form': form,
+    })
+
+@login_required
+def lista_chats(request):
+    current_user = request.user
+    other_users = User.objects.exclude(username=current_user.username)
+
+    last_messages = []
+    for other_user in other_users:
+        messages = Message.objects.filter(
+            (Q(sender=current_user, receiver=other_user) |
+             Q(sender=other_user, receiver=current_user))
+        ).order_by('-timestamp')[:1]
+
+        if messages:
+            last_messages.append({
+                'other_user': other_user,
+                'content': messages[0].content,
+                'sender': messages[0].sender,
+                'timestamp': messages[0].timestamp,
+            })
+
+    return render(request, 'chat/lista_chats.html', {'last_messages': last_messages})

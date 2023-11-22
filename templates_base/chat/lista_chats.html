@@ -1,0 +1,24 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Lista de Chats</h2>
+
+  {% if last_messages %}
+    <ul>
+      {% for message in last_messages %}
+        <li>
+          <a href="{% url 'chat' username=message.other_user.username %}">
+            <strong>{{ message.other_user.username }}</strong>
+          </a>
+          <br>
+          {{ message.content }}
+          <br>
+          Enviado por: {{ message.sender.username }} a las {{ message.timestamp }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No tienes chats.</p>
+  {% endif %}
+{% endblock %}
