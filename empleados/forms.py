@@ -1,6 +1,8 @@
 from django import forms
 from .models import encargado, mostrador, subencargado
 from django.contrib.auth.models import User
+from django import forms
+from .models import Message
 
 
 class BaseEmpleadoForm(forms.ModelForm):
@@ -47,8 +49,6 @@ class MostradorForm(BaseEmpleadoForm):
             raise forms.ValidationError('Telefono tiene que ser un numero')
         return telefono
     
-from django import forms
-from .models import Message
 
 
 

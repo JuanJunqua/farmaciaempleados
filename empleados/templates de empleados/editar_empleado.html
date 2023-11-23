@@ -1,17 +1,23 @@
 {% extends 'base.html' %}
 
-{% block title %}Lista de Mostradores{% endblock %}
+{% block title %}Editar Empleado{% endblock %}
 
-{% block heading %}Lista de mostradores{% endblock %}
+{% block heading %}Editar empleado: {{ empleado.Nombre }}{% endblock %}
 
 {% block content %}
-  <h2>Editar empleado</h2>
+  <h2>Editar empleado: {{ empleado.Nombre }}</h2>
   <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+    
+    {% for field in form %}
+      <div class="form-group">
+        {{ field.label_tag }}: {{ field }}
+        {% if field.errors %}
+          <div class="error">{{ field.errors|striptags }}</div>
+        {% endif %}
+      </div>
+    {% endfor %}
+    
     <button type="submit">Guardar</button>
   </form>
-
-  
 {% endblock %}
-

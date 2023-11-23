@@ -48,13 +48,13 @@ def subencargados(request):
             nuevo_subencargado = form.save(commit=False)
             nuevo_subencargado.creador = request.user
             nuevo_subencargado.save()
-            return redirect('subencargados')  
+            return redirect('base')  
     else:
         form = SubencargadoForm(initial={'creador': request.user})
 
-    subencargados = subencargado.objects.all()
+    subencargados_lista = subencargado.objects.all()
 
-    return render(request, 'subencargados.html', {'subencargados': subencargados, 'form': form})
+    return render(request, 'subencargados.html', {'subencargados': subencargados_lista, 'form': form})
 
 @login_required
 def mostradores(request):
@@ -64,13 +64,13 @@ def mostradores(request):
             nuevo_mostrador = form.save(commit=False)
             nuevo_mostrador.creador = request.user
             nuevo_mostrador.save()
-            return redirect('mostradores')
+            return redirect('base')
     else:
         form = MostradorForm(initial={'creador': request.user})
 
-    mostradores = mostrador.objects.all()
+    mostradores_lista = mostrador.objects.all()
 
-    return render(request, 'mostradores.html', {'mostradores': mostradores, 'form': form})
+    return render(request, 'mostradores.html', {'mostradores': mostradores_lista, 'form': form})
 
 #buscar
 def empleados(request):
