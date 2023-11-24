@@ -10,8 +10,7 @@ from django.forms.widgets import HiddenInput
 class EncargadoForm(forms.ModelForm):
     class Meta:
         model = encargado
-        fields = '__all__'
-       
+        exclude = ['creador', 'empleo']
 
     def clean_telefono(self):
         telefono = self.cleaned_data.get('telefono')
@@ -24,7 +23,7 @@ class EncargadoForm(forms.ModelForm):
 class SubencargadoForm(forms.ModelForm):
     class Meta:
         model = subencargado
-        fields = '__all__'
+        exclude = ['creador', 'empleo']
         
 
     def clean_telefono(self):
@@ -38,7 +37,7 @@ class SubencargadoForm(forms.ModelForm):
 class MostradorForm(forms.ModelForm):
     class Meta:
         model = mostrador
-        fields = '__all__'
+        exclude = ['creador', 'empleo']
         
         
 

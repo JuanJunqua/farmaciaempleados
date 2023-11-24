@@ -36,7 +36,7 @@ def encargados(request, id=None):
             nuevo_encargado.save()
             return redirect('base') 
     else:
-        form = EncargadoForm(initial={'creador': request.user})
+        form = EncargadoForm(initial={'creador': request.user, 'empleo': 'encargado'})
 
     encargados_lista = encargado.objects.all() 
     
@@ -55,7 +55,8 @@ def subencargados(request, id=None):
             nuevo_subencargado.save()
             return redirect('base')  
     else:
-        form = SubencargadoForm(initial={'creador': request.user})
+        form = EncargadoForm(initial={'creador': request.user, 'empleo': 'subencargado'})
+
 
     subencargados_lista = subencargado.objects.all()
 
@@ -74,7 +75,8 @@ def mostradores(request, id=None):
             nuevo_mostrador.save()
             return redirect('base')
     else:
-        form = MostradorForm(initial={'creador': request.user})
+        form = EncargadoForm(initial={'creador': request.user, 'empleo': 'mostrador'})
+
 
     mostradores_lista = mostrador.objects.all()
 
