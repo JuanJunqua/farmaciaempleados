@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Informacion del Empleado</h2>
+  <p>Nombre: {{ empleado.Nombre }}</p>
+  <p>Apellido: {{ empleado.Apellido }}</p>
+  <p>Telefono: {{ empleado.telefono }}</p>
+  <p>Edad: {{ empleado.edad }}</p>
+  <p>Email: {{ empleado.email }}</p>
+  <p>Descripción: {{ empleado.descripcion }}</p>
+  <p>Empleo: {{ empleado.empleo }}</p>
+  <p>Creador: {{ empleado.creador }}</p>
+
+  <a href="{% url 'mostrarempleados' %}">Volver a la lista de empleados</a>
+{% endblock %}

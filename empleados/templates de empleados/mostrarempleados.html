@@ -6,7 +6,10 @@
   <p>Encargados:</p>
   {% for encargado in encargados %}
     <p>
-      {{ encargado.Nombre }} {{encargado.Apellido}} ------- creador = {{ encargado.creador }} - 
+      {{ encargado.Nombre }} {{ encargado.Apellido }} ------- creador = {{ encargado.creador }} - 
+      {% if user.is_authenticated %}
+        <a href="{% url 'ver_informacion_empleado' encargado.id %}">Info</a>
+      {% endif %}
       {% if encargado.creador == user %}
         <a href="{% url 'eliminar_empleado' encargado.id %}">Eliminar</a>
         <a href="{% url 'editar_empleado' encargado.id %}">Editar</a>
@@ -17,7 +20,10 @@
   <p>Subencargados:</p>
   {% for subencargado in subencargados %}
     <p>
-      {{ subencargado.Nombre }}  {{subencargado.Apellido}} ------- creador = {{ subencargado.creador }} - 
+      {{ subencargado.Nombre }} {{ subencargado.Apellido }} ------- creador = {{ subencargado.creador }} - 
+      {% if user.is_authenticated %}
+        <a href="{% url 'ver_informacion_empleado' subencargado.id %}">Info</a>
+      {% endif %}
       {% if subencargado.creador == user %}
         <a href="{% url 'eliminar_empleado' subencargado.id %}">Eliminar</a>
         <a href="{% url 'editar_empleado' subencargado.id %}">Editar</a>
@@ -28,7 +34,10 @@
   <p>Mostradores:</p>
   {% for mostrador in mostradores %}
     <p>
-      {{ mostrador.Nombre }}  {{mostrador.Apellido}} ------ creador {{ mostrador.creador }} - 
+      {{ mostrador.Nombre }} {{ mostrador.Apellido }} ------ creador {{ mostrador.creador }} - 
+      {% if user.is_authenticated %}
+        <a href="{% url 'ver_informacion_empleado' mostrador.id %}">Info</a>
+      {% endif %}
       {% if mostrador.creador == user %}
         <a href="{% url 'eliminar_empleado' mostrador.id %}">Eliminar</a>
         <a href="{% url 'editar_empleado' mostrador.id %}">Editar</a>

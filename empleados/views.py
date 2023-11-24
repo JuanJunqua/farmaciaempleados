@@ -12,6 +12,8 @@ from .models import Message
 from .forms import MessageForm
 from django.db import models
 from django.http import HttpResponseNotFound
+from django.shortcuts import render, get_object_or_404
+
 
 
 
@@ -253,3 +255,14 @@ def lista_chats(request):
             })
 
     return render(request, 'chat/lista_chats.html', {'last_messages': last_messages})
+
+
+
+def ver_informacion_empleado(request, empleado_id):
+    empleado = (
+        encargado.objects.filter(id=empleado_id).first() or
+        subencargado.objects.filter(id=empleado_id).first() or
+        mostrador.objects.filter(id=empleado_id).first()
+    )
+    
+    return render(request, 'ver_informacion_empleado.html', {'empleado': empleado})
