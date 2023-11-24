@@ -12,12 +12,9 @@
     {% for field in form %}
       <div class="form-group">
         {{ field.label_tag }}: {{ field }}
-        {% if field.errors %}
-          <div class="error">{{ field.errors|striptags }}</div>
-        {% endif %}
       </div>
     {% endfor %}
     
-    <button type="submit">Guardar</button>
+    <button type="submit" class="btn btn-primary">Guardar</button>
   </form>
 {% endblock %}

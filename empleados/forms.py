@@ -5,18 +5,13 @@ from django import forms
 from .models import Message
 from django.forms.widgets import HiddenInput
 
-class BaseEmpleadoForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['empleo'].widget.attrs['readonly'] = True
 
-class EncargadoForm(BaseEmpleadoForm):
+
+class EncargadoForm(forms.ModelForm):
     class Meta:
         model = encargado
         fields = '__all__'
-        widgets = {
-            'creador': HiddenInput(),
-        }
+       
 
     def clean_telefono(self):
         telefono = self.cleaned_data.get('telefono')
@@ -26,13 +21,11 @@ class EncargadoForm(BaseEmpleadoForm):
             raise forms.ValidationError('Telefono tiene que ser un numero')
         return telefono
 
-class SubencargadoForm(BaseEmpleadoForm):
+class SubencargadoForm(forms.ModelForm):
     class Meta:
         model = subencargado
         fields = '__all__'
-        widgets = {
-            'creador': HiddenInput(),
-        }
+        
 
     def clean_telefono(self):
         telefono = self.cleaned_data.get('telefono')
@@ -42,13 +35,12 @@ class SubencargadoForm(BaseEmpleadoForm):
             raise forms.ValidationError('Telefono tiene que ser un numero')
         return telefono
 
-class MostradorForm(BaseEmpleadoForm):
+class MostradorForm(forms.ModelForm):
     class Meta:
         model = mostrador
         fields = '__all__'
-        widgets = {
-            'creador': HiddenInput(),
-        }
+        
+        
 
     def clean_telefono(self):
         telefono = self.cleaned_data.get('telefono')

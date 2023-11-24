@@ -23,9 +23,11 @@ from django.http import HttpResponseNotFound
 def index(request):
     return render(request, 'base.html')
 
+#creacion de empleados
+
 
 @login_required
-def encargados(request):
+def encargados(request, id=None):
     if request.method == 'POST':
         form = EncargadoForm(request.POST)
         if form.is_valid():
@@ -40,8 +42,11 @@ def encargados(request):
     
     return render(request, 'encargados.html', {'encargados': encargados_lista, 'form': form})
 
+
+
+
 @login_required
-def subencargados(request):
+def subencargados(request, id=None):
     if request.method == 'POST':
         form = SubencargadoForm(request.POST)
         if form.is_valid():
@@ -56,8 +61,11 @@ def subencargados(request):
 
     return render(request, 'subencargados.html', {'subencargados': subencargados_lista, 'form': form})
 
+
+
+
 @login_required
-def mostradores(request):
+def mostradores(request, id=None):
     if request.method == 'POST':
         form = MostradorForm(request.POST)
         if form.is_valid():
@@ -71,6 +79,8 @@ def mostradores(request):
     mostradores_lista = mostrador.objects.all()
 
     return render(request, 'mostradores.html', {'mostradores': mostradores_lista, 'form': form})
+
+
 
 #buscar
 def empleados(request):
@@ -99,6 +109,9 @@ def empleados(request):
 
     return render(request, 'busqueda.html', {'empleados': empleados, 'query': query})
 
+
+
+
 #ver todos los empleados
 def mostrarempleados(request):
     encargados = encargado.objects.all()
@@ -112,6 +125,9 @@ def mostrarempleados(request):
     }
 
     return render(request, 'mostrarempleados.html', context)
+
+
+
 
 #eliminar
 @login_required
@@ -128,6 +144,9 @@ def eliminar_empleado(request, id):
             return redirect('mostrarempleados')
 
     return render(request, 'eliminar_empleado.html', {'empleado': empleado_eliminar})
+
+
+
 
 
 #editar
@@ -151,11 +170,11 @@ def editar_empleado(request, id):
             formulario.save()
             return redirect('mostrarempleados')
     else:
-        
         formulario = formularioseditar[type(empleadoeditar)](instance=empleadoeditar)
-        formulario.fields['empleo'].widget.attrs['readonly'] = True
 
     return render(request, 'editar_empleado.html', {'form': formulario, 'empleado': empleadoeditar})
+
+
 
 
 
