@@ -3,7 +3,7 @@ from .models import encargado, mostrador, subencargado
 from django.contrib.auth.models import User
 from django import forms
 from .models import Message
-
+from django.forms.widgets import HiddenInput
 
 class BaseEmpleadoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -14,6 +14,9 @@ class EncargadoForm(BaseEmpleadoForm):
     class Meta:
         model = encargado
         fields = '__all__'
+        widgets = {
+            'creador': HiddenInput(),
+        }
 
     def clean_telefono(self):
         telefono = self.cleaned_data.get('telefono')
@@ -27,6 +30,9 @@ class SubencargadoForm(BaseEmpleadoForm):
     class Meta:
         model = subencargado
         fields = '__all__'
+        widgets = {
+            'creador': HiddenInput(),
+        }
 
     def clean_telefono(self):
         telefono = self.cleaned_data.get('telefono')
@@ -40,6 +46,9 @@ class MostradorForm(BaseEmpleadoForm):
     class Meta:
         model = mostrador
         fields = '__all__'
+        widgets = {
+            'creador': HiddenInput(),
+        }
 
     def clean_telefono(self):
         telefono = self.cleaned_data.get('telefono')
